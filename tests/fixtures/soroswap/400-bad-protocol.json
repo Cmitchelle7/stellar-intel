@@ -6,9 +6,7 @@
   },
   "status": 400,
   "body": {
-    "message": [
-      "Each value in protocols must be a supported protocol"
-    ],
+    "message": ["Each value in protocols must be a supported protocol"],
     "error": "Bad Request",
     "statusCode": 400
   },

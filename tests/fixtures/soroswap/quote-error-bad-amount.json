@@ -8,9 +8,7 @@
       "assetOut": "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC",
       "amount": "0",
       "tradeType": "EXACT_IN",
-      "protocols": [
-        "soroswap"
-      ]
+      "protocols": ["soroswap"]
     }
   },
   "response": {

@@ -52,10 +52,7 @@ describe('recorded fixtures: hygiene', () => {
   it.each(names)('%s has a capture date and no credentials', (name) => {
     const f = loadSoroswapFixture(name);
     expect(Date.parse(f.capturedAt)).not.toBeNaN();
-    const text = readFileSync(
-      path.join(__dirname, 'fixtures', 'soroswap', `${name}.json`),
-      'utf8'
-    );
+    const text = readFileSync(path.join(__dirname, 'fixtures', 'soroswap', `${name}.json`), 'utf8');
     expect(text).not.toMatch(/authorization|bearer\s|x-api-key/i);
     expect(text).not.toMatch(/sk_[0-9a-f]{32,}/i);
   });
@@ -93,7 +90,13 @@ describe('createSoroswapHop.plan with recorded quotes', () => {
 });
 
 describe('error shapes recorded from the live API', () => {
-  const errors = ['400-no-path-found', '400-invalid-address', '400-bad-protocol', 'quote-error-bad-amount', '403-forbidden'];
+  const errors = [
+    '400-no-path-found',
+    '400-invalid-address',
+    '400-bad-protocol',
+    'quote-error-bad-amount',
+    '403-forbidden',
+  ];
 
   it.each(errors)('getSoroswapQuote throws SoroswapApiError for %s', async (name) => {
     const f = loadSoroswapFixture(name);

@@ -9,11 +9,7 @@
     "assetOut": "CB226ZOEYXTBPD3QEGABTJYSKZVBP2PASEISLG3SBMTN5CE4QZUVZ3CE",
     "amount": "10000000",
     "tradeType": "EXACT_IN",
-    "protocols": [
-      "soroswap",
-      "phoenix",
-      "aqua"
-    ]
+    "protocols": ["soroswap", "phoenix", "aqua"]
   },
   "status": 201,
   "body": {
@@ -49,12 +45,8 @@
           ],
           "parts": 10,
           "is_exact_in": true,
-          "poolIds": [
-            "CAC56QNJ2CX456TPC5S4MSOU3DBULG4TGN7AZ2SAYGBLD3GICFMZBIT2"
-          ],
-          "poolHashes": [
-            "89f53ae8d7a4975014593f28298a15235b0a3e052de630c7a936a1c6566d3205"
-          ],
+          "poolIds": ["CAC56QNJ2CX456TPC5S4MSOU3DBULG4TGN7AZ2SAYGBLD3GICFMZBIT2"],
+          "poolHashes": ["89f53ae8d7a4975014593f28298a15235b0a3e052de630c7a936a1c6566d3205"],
           "hops": [
             {
               "poolId": "CAC56QNJ2CX456TPC5S4MSOU3DBULG4TGN7AZ2SAYGBLD3GICFMZBIT2",

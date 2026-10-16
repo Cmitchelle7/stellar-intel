@@ -9,11 +9,7 @@
     "assetOut": "CAUIKL3IYGMERDRUN6YSCLWVAKIFG5Q4YJHUKM4S4NJZQIA3BAS6OJPK",
     "amount": "10000000",
     "tradeType": "EXACT_IN",
-    "protocols": [
-      "soroswap",
-      "phoenix",
-      "aqua"
-    ]
+    "protocols": ["soroswap", "phoenix", "aqua"]
   },
   "status": 201,
   "body": {

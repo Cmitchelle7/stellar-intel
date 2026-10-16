@@ -1,43 +1,39 @@
 # Soroswap API fixtures
 
-Real responses captured from `https://api.soroswap.finance` for issue #1084.
+Real responses recorded from `https://api.soroswap.finance` for issue #1084.
+`tests/hop-swap-soroswap.fixtures.spec.ts` replays them through a stubbed
+`fetch`, so the swap tests run with the network unplugged. Load them with
+`loadSoroswapFixture(name)` from `load.ts`.
 
-Every fixture is a JSON file with this shape:
+Every fixture carries a `capturedAt` timestamp, the response `status` and
+`body`, and the `request` body where it was recorded. `load.ts` accepts both
+layouts in use: flat (`{ status, body }`) and nested (`{ response: { status, body } }`).
 
-    {
-      "capturedAt": "2026-09-27T20:53:52Z",
-      "capturedFrom": { "method": "POST", "url": "https://api.soroswap.finance/quote?network=mainnet" },
-      "status": 403,
-      "body": { ... },
-      "responseHeaders": { ... }
-    }
+Never hand-edit a fixture. If the live API changes shape, record it again.
 
 ## Fixtures
 
-| File | Captured | Status | What it is |
-|---|---|---|---|
-| `403-forbidden.json` | 2026-09-27 | 403 | POST `/quote` with no Authorization header. |
-| `400-no-path-found.json` | 2026-09-27 | 400 | POST `/quote` with valid auth and valid assets (USDC to XLM), but no route exists on mainnet. |
-| `400-invalid-address.json` | 2026-09-27 | 400 | POST `/quote` with a non-contract `assetIn`. |
-| `400-bad-protocol.json` | 2026-09-27 | 400 | POST `/quote` with an unrecognised protocol name. |
+| File                             | Captured   | Status | What it is                                                                 |
+| -------------------------------- | ---------- | ------ | -------------------------------------------------------------------------- |
+| `mainnet-quote-usdc-eurc.json`   | 2026-10-06 | 201    | POST `/quote`, USDC to EURC, one direct Soroswap pool.                     |
+| `mainnet-quote-usdc-aqua.json`   | 2026-10-06 | 201    | POST `/quote`, USDC to AQUA, split 35/65 across two multi-hop Aqua routes. |
+| `mainnet-quote-usdc-usdglo.json` | 2026-10-06 | 201    | POST `/quote`, USDC to USDGLO, one direct Aqua pool.                       |
+| `mainnet-build.json`             | 2026-10-06 | 400    | POST `/quote/build` for an unfunded account: Account not found.            |
+| `quote-error-bad-amount.json`    | 2026-10-06 | 400    | POST `/quote` with `amount: "0"`.                                          |
+| `400-no-path-found.json`         | 2026-09-27 | 400    | POST `/quote` for a pair with no route.                                    |
+| `400-invalid-address.json`       | 2026-09-27 | 400    | POST `/quote` with a non-contract `assetIn`.                               |
+| `400-bad-protocol.json`          | 2026-09-27 | 400    | POST `/quote` with an unrecognised protocol name.                          |
+| `403-forbidden.json`             | 2026-09-27 | 403    | POST `/quote` with no Authorization header.                                |
 
-Two distinct error body shapes are in scope for `SoroswapApiError`:
+Two error body shapes reach `SoroswapApiError`:
 
-- **`{ message, error, statusCode }`** — standard NestJS Bad Request shape (403 and validation errors).
-- **`{ title, detail, extra, error }`** — NestJS Problem Details, used when no route is found.
+- **`{ message, error, statusCode }`**: the standard NestJS Bad Request shape
+  (403, validation errors, build errors).
+- **`{ title, detail, extra, error }`**: NestJS Problem Details, returned when
+  no route is found.
 
-## Why no success fixtures
+## Not covered
 
-The success endpoints (`/quote` returning 200, `/quote/build` returning an XDR)
-require a live route for the USDC to XLM pair on mainnet. As of the capture date
-no such route exists. Recording invented success payloads would defeat the point
-of the fixture — the value is that it is what the API actually returned.
-
-If a route becomes available, re-run `node scripts/capture-soroswap-fixtures.mjs`
-and add the new files to `index.ts`.
-
-## Re-capturing
-
-    node scripts/capture-soroswap-fixtures.mjs
-
-Requires `SOROSWAP_API_KEY` in `.env` or the environment.
+A successful `/quote/build` response. It needs a funded mainnet account with a
+trustline for the input asset, so `mainnet-build.json` records the error the
+API returns for an unfunded one instead.

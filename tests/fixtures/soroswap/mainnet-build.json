@@ -38,9 +38,7 @@
             ],
             "parts": 10,
             "is_exact_in": true,
-            "poolIds": [
-              "CC7CDFY2VGDODJ7WPO3JIK2MXLOAXL4LRQCC43UJDBAIJ4SVFO3HNPOC"
-            ],
+            "poolIds": ["CC7CDFY2VGDODJ7WPO3JIK2MXLOAXL4LRQCC43UJDBAIJ4SVFO3HNPOC"],
             "hops": [
               {
                 "poolId": "CC7CDFY2VGDODJ7WPO3JIK2MXLOAXL4LRQCC43UJDBAIJ4SVFO3HNPOC",
